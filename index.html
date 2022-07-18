@@ -107,49 +107,49 @@
         context.clearRect(0,0,canvas.width,canvas.height);
 
 
-        snake.x += snake.dx; // mỗi loop rắn sẽ di chuyển thêm 1dx đơn vị
+        index.x += index.dx; // mỗi loop rắn sẽ di chuyển thêm 1dx đơn vị
 
-        snake.y += snake.dy;
+        index.y += index.dy;
 
 
         // khi snake đụng tường sẽ chạy lại từ edge đối diện
 
-        if (snake.x < 0) {
+        if (index.x < 0) {
 
-            snake.x = canvas.width - grid;
-
-        }
-
-        else if (snake.x >= canvas.width) {
-
-            snake.x = 0;
+            index.x = canvas.width - grid;
 
         }
 
+        else if (index.x >= canvas.width) {
 
-        if (snake.y < 0) {
-
-            snake.y = canvas.height - grid;
+            index.x = 0;
 
         }
 
-        else if (snake.y >= canvas.height) {
 
-            snake.y = 0;
+        if (index.y < 0) {
+
+            index.y = canvas.height - grid;
+
+        }
+
+        else if (index.y >= canvas.height) {
+
+            index.y = 0;
 
         }
 
 
         // Phương thức unshift sẽ thêm một hoặc nhiều phần tử vào đầu mảng
 
-        snake.cells.unshift({x: snake.x, y: snake.y});
+        index.cells.unshift({x: index.x, y: index.y});
 
 
         // thêm 1 ô vuông phía trc thì phải remove 1 cái phía sau để snake move dc.
 
-        if (snake.cells.length > snake.maxCells) {
+        if (index.cells.length > index.maxCells) {
 
-            snake.cells.pop();
+            index.cells.pop();
 
         }
 
@@ -165,7 +165,7 @@
 
         context.fillStyle = 'green';
 
-        snake.cells.forEach(function(cell, index) {
+        index.cells.forEach(function(cell, index) {
 
             context.fillRect(cell.x, cell.y, grid-1, grid-1);
 
@@ -174,7 +174,7 @@
 
             if (cell.x === apple.x && cell.y === apple.y) {
 
-                snake.maxCells++;
+                index.maxCells++;
 
 
                 apple.x = getRandomInt(0, 25) * grid;
@@ -186,25 +186,25 @@
 
             // check va chạm khi rắn đụng đuôi
 
-            for (var i = index + 1; i < snake.cells.length; i++) {
+            for (var i = index + 1; i < index.cells.length; i++) {
 
 
 
                 // va chạm thì reset game
 
-                if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+                if (cell.x === index.cells[i].x && cell.y === index.cells[i].y) {
 
-                    snake.x = 160;
+                    index.x = 160;
 
-                    snake.y = 160;
+                    index.y = 160;
 
-                    snake.cells = [];
+                    index.cells = [];
 
-                    snake.maxCells = 4;
+                    index.maxCells = 4;
 
-                    snake.dx = grid;
+                    index.dx = grid;
 
-                    snake.dy = 0;
+                    index.dy = 0;
 
 
                     apple.x = getRandomInt(0, 25) * grid;
@@ -225,35 +225,35 @@
 
         // lọc sự kiện keydown để rắn không di ngược lại
 
-        if (e.which === 37 && snake.dx === 0) {
+        if (e.which === 37 && index.dx === 0) {
 
-            snake.dx = -grid;
+            index.dx = -grid;
 
-            snake.dy = 0;
-
-        }
-
-        else if (e.which === 38 && snake.dy === 0) {
-
-            snake.dy = -grid;
-
-            snake.dx = 0;
+            index.dy = 0;
 
         }
 
-        else if (e.which === 39 && snake.dx === 0) {
+        else if (e.which === 38 && index.dy === 0) {
 
-            snake.dx = grid;
+            index.dy = -grid;
 
-            snake.dy = 0;
+            index.dx = 0;
 
         }
 
-        else if (e.which === 40 && snake.dy === 0) {
+        else if (e.which === 39 && index.dx === 0) {
 
-            snake.dy = grid;
+            index.dx = grid;
 
-            snake.dx = 0;
+            index.dy = 0;
+
+        }
+
+        else if (e.which === 40 && index.dy === 0) {
+
+            index.dy = grid;
+
+            index.dx = 0;
 
         }
 
